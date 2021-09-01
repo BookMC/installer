@@ -36,8 +36,14 @@ public class InstallerPanel extends JPanel {
             JLabel title = new JLabel("Loader Version");
             loaderVersionComboBox = new JComboBox<>();
             BookMetadataLoader.getBookLoaderVersions().whenComplete((data, throwable) -> {
-                for (VersionData version : data) {
-                    loaderVersionComboBox.addItem(version);
+                if (data != null) {
+                    for (VersionData version : data) {
+                        loaderVersionComboBox.addItem(version);
+                    }
+                } else {
+                    loaderVersionComboBox.setEnabled(false);
+                    gameVersionComboBox.setEnabled(false);
+                    installButton.setEnabled(false);
                 }
             });
 
@@ -48,10 +54,16 @@ public class InstallerPanel extends JPanel {
         newRow(panel -> {
             hookVersionComboBox = new JComboBox<>();
             BookMetadataLoader.getHookVersions().whenComplete((data, throwable) -> {
-                for (VersionData version : data) {
-                    hookVersionComboBox.addItem(version);
+                if (data != null) {
+                    for (VersionData version : data) {
+                        hookVersionComboBox.addItem(version);
+                    }
+                    refreshGameComboBox();
+                } else {
+                    hookVersionComboBox.setEnabled(false);
+                    gameVersionComboBox.setEnabled(false);
+                    installButton.setEnabled(false);
                 }
-                refreshGameComboBox();
             });
 
             hookVersionComboBox.addActionListener(e -> refreshGameComboBox());
@@ -181,7 +193,7 @@ public class InstallerPanel extends JPanel {
             }
 
             BookMetadataLoader.getMinecraftVersions(versionData.toString()).whenComplete((data, throwable) -> {
-                if (data.size() <= 0) {
+                if (data == null || data.size() <= 0) {
                     gameVersionComboBox.setEnabled(false);
                     installButton.setEnabled(false);
                 } else {

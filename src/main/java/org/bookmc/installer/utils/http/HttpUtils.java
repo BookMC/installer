@@ -12,6 +12,7 @@ public class HttpUtils {
         try {
             URL u = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
+            connection.setConnectTimeout(3 * 1000);
             connection.addRequestProperty("User-Agent", "Book/Installer " + Constants.INSTALLER_VERSION);
             try (InputStream stream = connection.getInputStream()) {
                 byte[] bytes = stream.readAllBytes();
