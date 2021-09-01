@@ -1,5 +1,6 @@
 package org.bookmc.installer.backend;
 
+import org.bookmc.installer.api.install.java.JavaVersion;
 import org.bookmc.installer.impl.install.DefaultBookInstall;
 import org.bookmc.installer.impl.mojang.MojangInstallationPlatform;
 import org.bookmc.installer.utils.constants.Constants;
@@ -26,7 +27,7 @@ public class InstallerOperations {
                 new Library(String.format("%s:%s:%s", Constants.PACKAGE, Constants.LOADER_COMPONENT, loaderVersion), Constants.MAVEN_REPO)
             };
 
-            byte[] versionJson = VersionJson.createToBytes(createVersionId(hookVersion, gameVersion, loaderVersion), gameVersion, channel, Constants.MAIN_CLASS, libraries);
+            byte[] versionJson = VersionJson.createToBytes(createVersionId(hookVersion, gameVersion, loaderVersion), gameVersion, channel, Constants.MAIN_CLASS, JavaVersion.JAVA_16, libraries);
 
             String icon = "data:image/png;base64," + Base64.getEncoder().encodeToString(readLogo());
 
