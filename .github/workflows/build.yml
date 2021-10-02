@@ -2,7 +2,7 @@ name: Build and test
 
 on: [push]
 jobs:
-  build_test_and_publish_jdk16:
+  build_jdk17:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
