@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,7 +33,7 @@ public class InstallerOperations {
 
             try {
                 new DefaultBookInstall().install(new MojangInstallationPlatform(minecraftDirectory), versionJson, icon);
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException | MalformedURLException e) {
                 e.printStackTrace();
             }
         });
