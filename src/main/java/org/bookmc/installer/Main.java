@@ -70,7 +70,7 @@ public class Main {
 
         LOGGER.info("Starting installation process with current data: Game Version: {}, Hook Version: {}, Loader Verison: {}, Server: {}, Minecraft Directory: {}", gameVersionValue, hookVersionValue, loaderVersionValue, serverValue, minecraftDirectoryValue.getAbsolutePath());
 
-        InstallerOperations.install(gameVersionValue, hookVersionValue, loaderVersionValue, Constants.RELEASE_CHANNEL, !serverValue, minecraftDirectoryValue).whenComplete((unused, throwable) -> LOGGER.info("Successfully installed " + InstallerOperations.createVersionId(hookVersionValue, gameVersionValue, loaderVersionValue)));
+        InstallerOperations.install(gameVersionValue, hookVersionValue, loaderVersionValue, Constants.RELEASE_CHANNEL, !serverValue, minecraftDirectoryValue).whenComplete((unused, throwable) -> LOGGER.info("Successfully installed " + InstallerOperations.createVersionId(gameVersionValue, loaderVersionValue)));
     }
 
     private static String getDefaultHook() throws ExecutionException, InterruptedException {

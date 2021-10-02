@@ -18,10 +18,11 @@ java {
 }
 
 group "org.bookmc"
-version "0.2.0${branch != "main" && !branch.isEmpty() ? "-$branch" : ""}+${buildNumber ? "build.$buildNumber" : "local"}"
+version "0.2.2${branch != "main" && !branch.isEmpty() ? "-$branch" : ""}+${buildNumber ? "build.$buildNumber" : "local"}"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url "https://maven.bookmc.org"
     }
@@ -34,7 +35,7 @@ configurations {
 
 dependencies {
     include "com.google.code.gson:gson:2.8.8"
-    include "org.bookmc:install:0.3.0+build.4"
+    include "org.bookmc:install:0.3.0+local"
     include "net.sf.jopt-simple:jopt-simple:6.0-alpha-3"
 
     include "org.apache.logging.log4j:log4j-api:2.14.1"

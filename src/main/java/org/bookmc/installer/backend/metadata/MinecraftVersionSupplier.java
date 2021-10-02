@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 public record MinecraftVersionSupplier(String hookVersion) implements Supplier<List<String>> {
     @Override
     public List<String> get() {
-        String url = Constants.MAVEN_REPO + Constants.VERSION_JSON;
+        String url = Constants.VERSION_JSON;
         JsonObject json = JsonParser.parseString(HttpUtils.get(url)).getAsJsonObject();
         if (json.has(hookVersion)) {
             return toString(json.getAsJsonArray(hookVersion));

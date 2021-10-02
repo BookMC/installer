@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
@@ -23,24 +22,24 @@ public class InstallerOperations {
             }
 
             Library[] libraries = new Library[]{
-                new Library(String.format("%s:%s:%s:mc%s", Constants.PACKAGE, Constants.MINECRAFT_COMPONENT, hookVersion, gameVersion), Constants.MAVEN_REPO),
-                new Library(String.format("%s:%s:%s", Constants.PACKAGE, Constants.LOADER_COMPONENT, loaderVersion), Constants.MAVEN_REPO)
+                new Library(String.format("%s:%s:%s:mc%s", Constants.PACKAGE, Constants.MINECRAFT_COMPONENT, hookVersion, gameVersion), Constants.MAVEN_REPO_RELEASES),
+                new Library(String.format("%s:%s:%s", Constants.PACKAGE, Constants.LOADER_COMPONENT, loaderVersion), Constants.MAVEN_REPO_RELEASES)
             };
 
-            byte[] versionJson = VersionJson.createToBytes(createVersionId(hookVersion, gameVersion, loaderVersion), gameVersion, channel, Constants.MAIN_CLASS, JavaVersion.JAVA_16, libraries);
+            byte[] versionJson = VersionJson.createToBytes(createVersionId(gameVersion, loaderVersion), gameVersion, channel, Constants.MAIN_CLASS, JavaVersion.JAVA_16, libraries);
 
             String icon = "data:image/png;base64," + Base64.getEncoder().encodeToString(readLogo());
 
             try {
                 new DefaultBookInstall().install(new MojangInstallationPlatform(minecraftDirectory), versionJson, icon);
-            } catch (FileNotFoundException | MalformedURLException e) {
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public static String createVersionId(String hookVersion, String gameVersion, String loaderVersion) {
-        return "book-minecraft." + hookVersion + "-minecraft." + gameVersion + "-loader." + loaderVersion;
+    public static String createVersionId(String gameVersion, String loaderVersion) {
+        return "book-loader-" + loaderVersion + "-" + gameVersion;
     }
 
     private static byte[] readLogo() {
@@ -52,6 +51,6 @@ public class InstallerOperations {
             e.printStackTrace();
         }
 
-        throw new IllegalStateException();
+        throw new IllegalStateException("Failed to read the logo!");
     }
 }

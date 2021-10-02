@@ -11,8 +11,6 @@ import org.bookmc.installer.utils.constants.Constants;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,7 +56,6 @@ public class InstallerPanel extends JPanel {
                     for (VersionData version : data) {
                         hookVersionComboBox.addItem(version);
                     }
-                    refreshGameComboBox();
                 } else {
                     hookVersionComboBox.setEnabled(false);
                     gameVersionComboBox.setEnabled(false);
