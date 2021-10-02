@@ -27,13 +27,15 @@ public class InstallerOperations {
                 new Library(String.format("%s:%s:%s", Constants.PACKAGE, Constants.LOADER_COMPONENT, loaderVersion), Constants.MAVEN_REPO_RELEASES)
             };
 
-            byte[] versionJson = VersionJson.createToBytes(createVersionId(gameVersion, loaderVersion), gameVersion, channel, Constants.MAIN_CLASS, JavaVersion.JAVA_16, libraries);
+            String[] jvmArgs = new String[]{"-Dbook.candidate.disableResourceSearching=true"};
+
+            byte[] versionJson = VersionJson.createToBytes(createVersionId(gameVersion, loaderVersion), gameVersion, channel, Constants.MAIN_CLASS, JavaVersion.JAVA_16, new String[0], jvmArgs, libraries);
 
             String icon = "data:image/png;base64," + Base64.getEncoder().encodeToString(readLogo());
 
             try {
                 new DefaultBookInstall().install(new MojangInstallationPlatform(minecraftDirectory), versionJson, icon);
-            } catch (FileNotFoundException | MalformedURLException e) {
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         });
