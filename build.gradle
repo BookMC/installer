@@ -5,9 +5,6 @@ plugins {
 }
 
 ext {
-    def env = System.getenv()
-    buildNumber = env.BUILD_NUMBER
-    local = buildNumber == null
     branch = "git rev-parse --abbrev-ref HEAD".execute().text.trim()
 }
 
@@ -47,7 +44,7 @@ blossom {
 
 jar {
     from {
-        configurations.include.collect {it.isDirectory() ? it : zipTree(it) }
+        configurations.include.collect { it.isDirectory() ? it : zipTree(it) }
     }
 
     duplicatesStrategy DuplicatesStrategy.EXCLUDE
@@ -58,17 +55,16 @@ publishing {
     repositories {
         maven {
             def env = System.getenv()
+            boolean login = env.containsKey("MAVEN_USER") && env.containsKey("MAVEN_PASSWORD")
 
-            boolean isEnvVarsAvailable = env.containsKey("MAVEN_USER") && env.containsKey("MAVEN_PASSWORD")
-
-            if (isEnvVarsAvailable) {
+            if (login) {
                 credentials {
                     username env.get("MAVEN_USER")
                     password env.get("MAVEN_PASSWORD")
                 }
             }
 
-            url = local || !isEnvVarsAvailable ? "$buildDir/repository" : "https://maven.bookmc.org/releases/"
+            url = !login ? "$buildDir/repository" : "https://maven.bookmc.org/releases/"
         }
     }
 
