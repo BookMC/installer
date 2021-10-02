@@ -1,9 +1,11 @@
 package org.bookmc.installer.ui.swing.panel;
 
+import com.github.zafarkhaja.semver.Version;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bookmc.installer.backend.BookMetadataLoader;
 import org.bookmc.installer.backend.InstallerOperations;
+import org.bookmc.installer.backend.comparator.VersionComparator;
 import org.bookmc.installer.backend.metadata.data.VersionData;
 import org.bookmc.installer.impl.mojang.utils.MojangDirectoryUtils;
 import org.bookmc.installer.utils.constants.Constants;

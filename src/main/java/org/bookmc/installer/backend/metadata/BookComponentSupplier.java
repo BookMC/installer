@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.bookmc.installer.backend.comparator.VersionComparator;
 import org.bookmc.installer.backend.metadata.data.VersionData;
 import org.bookmc.installer.utils.constants.Constants;
 import org.bookmc.installer.utils.http.HttpUtils;
@@ -26,6 +27,7 @@ public record BookComponentSupplier(String component) implements Supplier<List<V
             }
         }
 
+        data.sort(new VersionComparator());
         return data;
     }
 }
