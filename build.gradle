@@ -18,13 +18,12 @@ java {
 }
 
 group "org.bookmc"
-version "0.2.2${branch != "main" && !branch.isEmpty() ? "-$branch" : ""}+${buildNumber ? "build.$buildNumber" : "local"}"
+version "0.2.2${branch != "main" && !branch.isEmpty() ? "-$branch" : ""}"
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven {
-        url "https://maven.bookmc.org"
+        url "https://maven.bookmc.org/releases/"
     }
 }
 
@@ -35,7 +34,7 @@ configurations {
 
 dependencies {
     include "com.google.code.gson:gson:2.8.8"
-    include "org.bookmc:install:0.3.0+local"
+    include "org.bookmc:install:0.3.0+build.5"
     include "net.sf.jopt-simple:jopt-simple:6.0-alpha-3"
 
     include "org.apache.logging.log4j:log4j-api:2.14.1"
@@ -78,8 +77,8 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             pom {
-                name = "book-loader"
-                url = "https://github.com/BookMC/loader"
+                name = project.name
+                url = "https://github.com/BookMC/${project.name}"
 
                 developers {
                     developer {
